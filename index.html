@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="cursor-heart" id="cursor"></div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="love-counter">❤️ <span id="loveCount">0</span></div>
+
+    <audio id="bgMusic" loop>
+        <source src="second.mp4" type="audio/mp4">
+    </audio>
+
+    <div class="wa-container">
+        <div class="wa-menu" id="waMenu">
+            <a href="https://wa.me/9599885546?text=I%20love%20the%20surprise!%20❤️" target="_blank" class="wa-item">Message Me ❤️</a>
+            <a href="https://wa.me/9599885546" target="_blank" class="wa-item">Video Call 📹</a>
+        </div>
+        <div class="wa-btn" onclick="toggleWA()">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+    </div>
+
+    <!-- NAME INPUT & PHOTO SELECTION SCREEN -->
+    <div class="screen active" id="p0">
+        <div class="content-card" style="max-width: 600px;">
+            <h1>💝 Welcome! 💝</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Let's personalize this special journey...</p>
+            
+            <div style="margin: 20px 0;">
+                <label style="display: block; font-weight: 600; margin-bottom: 10px; color: var(--coral); font-size: 1.1rem;">Enter Your Valentine's Name:</label>
+                <input type="text" id="valentineName" placeholder="e.g., Nishtha" style="width: 100%; padding: 15px; border: 2px solid var(--rose); border-radius: 15px; font-size: 1.1rem; text-align: center; font-family: 'Montserrat', sans-serif; outline: none;">
+            </div>
+
+            <div style="margin: 30px 0;">
+                <label style="display: block; font-weight: 600; margin-bottom: 15px; color: var(--coral); font-size: 1.1rem;">Select Their Photo:</label>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="previewPhoto()">
+                <button class="btn" onclick="document.getElementById('photoInput').click()" style="margin-bottom: 15px;">Choose Photo 📷</button>
+                
+                <div id="photoPreview" style="display: none; margin-top: 20px;">
+                    <div class="hero-photo" style="margin: 0 auto;">
+                        <img id="previewImg" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="saveName()" id="continueBtn" style="margin-top: 20px;">Continue to Love Story ❤️</button>
+        </div>
+    </div>
+
+    <!-- SCREENS -->
+    <div class="screen" id="p1">
+        <div class="content-card">
+            <h1>For <span id="displayName1">You</span> ❤️</h1>
+            <p>I have a special story to tell you... are you ready to see it?</p>
+            <button class="btn" onclick="startStory()">Open Your Heart ❤️</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p2">
+        <div class="hero-photo">
+            <img id="mainPhoto" src="pic 01.jpg" alt="Our Memory">
+        </div>
+        <div class="content-card">
+            <h1>Hey Beautiful <span id="displayName2"></span></h1>
+            <p>You are the best thing that ever happened to me. Every day feels like a gift because of you.</p>
+            <button class="btn" onclick="goTo(3)">See More</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p3">
+        <div class="content-card" style="max-width: 550px;">
+            <h1>A Little Video For You</h1>
+            <div class="video-wrapper">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/BSJa1UytM8w" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p style="margin-top: 20px;">I made this to remind you how much you mean to me.</p>
+            <button class="btn" onclick="goTo(4)">The Big Question</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p4">
+        <div class="content-card">
+            <h1><span id="displayName3">My Love</span>...</h1>
+            <p style="font-size: 1.4rem; font-weight: 600;">Will you be my Valentine?</p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <button class="btn" onclick="celebrate()">Yes! ❤️</button>
+                <button class="btn" id="no-btn" onmouseover="moveNo()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen" id="p5">
+        <div class="hero-photo">
+            <img id="celebrationPhoto" src="pic 05 .jpeg" alt="Celebration">
+        </div>
+        <div class="content-card">
+            <h1>Yay! 🎉</h1>
+            <p><span id="displayName4">My love</span>, I am the luckiest person alive. I love you to the moon and back!</p>
+            <button class="btn" onclick="goTo(6)">Continue the Journey ✨</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p6">
+        <div class="content-card" style="max-width: 600px;">
+            <h1>Our Beautiful Memories</h1>
+            <p>Every photo tells a story of us, <span id="displayName5">my dear</span>...</p>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="pic 01.jpeg" alt="Memory 1"></div>
+                <div class="gallery-item"><img src="pic 02.jpeg" alt="Memory 2"></div>
+                <div class="gallery-item"><img src="pic 03.jpeg" alt="Memory 3"></div>
+                <div class="gallery-item"><img src="pic 04.jpeg" alt="Memory 4"></div>
+                <div class="gallery-item"><img src="pic 05 .jpeg" alt="Memory 5"></div>
+                <div class="gallery-item"><img src="love 02.jpeg" alt="Memory 6"></div>
+            </div>
+            <button class="btn" onclick="goTo(7)">Read My Love Letters 💌</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p7">
+        <div class="content-card" style="max-width: 600px;">
+            <h1>Love Letters For You</h1>
+            <p>Click each envelope to read my messages...</p>
+            
+            <div class="letter-container">
+                <div class="letter" onclick="flipLetter(this)">
+                    <div class="letter-front">
+                        <h3>💌 Letter 1</h3>
+                        <p style="font-size: 0.9rem;">Click to open</p>
+                    </div>
+                    <div class="letter-back">
+                        <p><strong>My Dearest <span class="nameInLetter"></span>,</strong><br><br>
+                        From the moment I met you, my world changed. Your smile lights up my darkest days, and your laughter is my favorite melody. Every moment with you is a treasure I hold close to my heart. You are my today and all of my tomorrows. ❤️</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="letter-container" style="margin-top: 20px;">
+                <div class="letter" onclick="flipLetter(this)">
+                    <div class="letter-front">
+                        <h3>💌 Letter 2</h3>
+                        <p style="font-size: 0.9rem;">Click to open</p>
+                    </div>
+                    <div class="letter-back">
+                        <p><strong>To My Beautiful Love,</strong><br><br>
+                        You make me want to be a better person every single day. Your kindness, your strength, and your beautiful soul inspire me. I promise to always cherish you, support you, and love you with everything I have. Forever yours. 💕</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="letter-container" style="margin-top: 20px;">
+                <div class="letter" onclick="flipLetter(this)">
+                    <div class="letter-front">
+                        <h3>💌 Letter 3</h3>
+                        <p style="font-size: 0.9rem;">Click to open</p>
+                    </div>
+                    <div class="letter-back">
+                        <p><strong>My Forever Valentine,</strong><br><br>
+                        Thank you for being you. Thank you for your patience, your love, and your unwavering support. I can't imagine my life without you in it. You are my best friend, my partner, and my greatest love. Here's to forever together. 🌹</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" style="margin-top: 30px;" onclick="goTo(8)">Our Love Timeline 📅</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p8">
+        <div class="content-card" style="max-width: 650px;">
+            <h1>Our Love Story</h1>
+            <p>Every moment with you is a milestone...</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">The First Day</div>
+                        <p>The day we first met, I knew you were special. Your smile took my breath away.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Our First Date</div>
+                        <p>I was so nervous, but being with you felt like coming home. Best day of my life!</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">When I Knew</div>
+                        <p>The moment I realized I was completely in love with you. You've had my heart ever since.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Today & Forever</div>
+                        <p>Every day with you is a new adventure. I can't wait to create millions more memories together.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="goTo(9)">Play a Love Game 🎮</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p9">
+        <div class="content-card" style="max-width: 600px;">
+            <h1>Find the Matching Hearts</h1>
+            <p>Match all the pairs to unlock something special!</p>
+            <p style="font-size: 0.9rem; color: var(--coral);">Matches: <span id="matchCount">0</span>/8</p>
+            
+            <div class="memory-grid" id="memoryGame"></div>
+
+            <button class="btn" id="quizBtn" style="display: none; margin-top: 20px;" onclick="goTo(10)">Take the Love Quiz 💝</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p10">
+        <div class="content-card" style="max-width: 600px;">
+            <h1>How Well Do You Know Me?</h1>
+            <p id="quizQuestion">What's my favorite thing about you?</p>
+            
+            <div id="quizOptions">
+                <div class="quiz-option" onclick="checkAnswer(this, false)">Your cooking skills</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">Everything! Your smile, laugh, kindness, everything!</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">Your sense of humor</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">Your intelligence</div>
+            </div>
+
+            <button class="btn" id="nextQuizBtn" style="display: none; margin-top: 20px;" onclick="nextQuestion()">Next Question ➡️</button>
+            <button class="btn" id="finishQuizBtn" style="display: none; margin-top: 20px;" onclick="goTo(11)">See Your Score 🎉</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p11">
+        <div class="content-card">
+            <h1>Quiz Complete! 🎊</h1>
+            <p style="font-size: 2rem; color: var(--coral); margin: 20px 0;">
+                <span id="displayName6">You</span> scored: <span id="finalScore">0</span>/3
+            </p>
+            <p>No matter what score you got, you're perfect to me! Every day with you is a gift. ❤️</p>
+            <button class="btn" onclick="goTo(12)">One More Surprise! 🎁</button>
+        </div>
+    </div>
+
+    <div class="screen" id="p12">
+        <div class="content-card" style="max-width: 600px;">
+            <h1>Click Everywhere! ✨</h1>
+            <p>Click around this card to reveal hidden messages...</p>
+            
+            <div style="position: relative; height: 300px; background: linear-gradient(135deg, #ffc4d6, #ffe4f1); border-radius: 20px; margin: 20px 0; overflow: hidden; cursor: pointer;" id="surpriseBox">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; opacity: 0.3;">
+                    Tap anywhere... 💕
+                </div>
+            </div>
+
+            <p id="revealCount" style="color: var(--coral); font-weight: 600;">Messages Found: 0/10</p>
+            <button class="btn" onclick="goTo(1)" style="margin-top: 20px;">Start Over 🔄</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
